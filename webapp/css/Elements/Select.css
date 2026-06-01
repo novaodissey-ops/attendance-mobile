@@ -1,20 +1,36 @@
 .MobileSelect{
     border-radius: .75rem;
-    height: 2.75rem;
+    height: 2.5rem;
+    max-height: 2.5rem;
     
 }
 .MobileSelect.sapMSlt:not(.sapMSltIconOnly){
-    border-radius: .75rem;
+    border-radius: 1rem;
+}
+.MobileSelect.sapMSlt{
+    border: unset;
 }
 .MobileSelect.sapMSlt>.sapMSltArrow {
-    line-height: 2.75rem;
+    line-height: 2.5rem;
 }
 .MobileSelect.sapMSlt>.sapMSltLabel{
     font-family: Rubik;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
 }
+.MobileSelect.sapMSltPressed>.sapMSltArrow {
+    background: #EFF7FE;
+}
+.MobileSelect .sapMSltArrow {
+    border-radius: 50%;
+    color: #324153;
+    margin: .1rem;
+}
+.sapMSltPressed>.sapMSltArrow::before {
+    color: #324153;
+}
+
 .MobileSelectPopover{
     min-width: 60%;
     border-radius: .5rem;
@@ -22,7 +38,7 @@
 }
 .MobileSelectPopover .sapMSelectListItemBase{
     font-family: Rubik;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     outline: none;

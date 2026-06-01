@@ -57,3 +57,22 @@
     .MobileFlatButton.sapMBtn{
         height: 0;
     }
+    .MobileApproveButton .sapMBtnInner{
+        color: var(--Text-Color, #27292b);
+        font-family: Rubik;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        border-radius: 1rem;
+        min-width: 8rem;
+    }
+    .MobileDarkButton .sapMBtnInner{
+        background-color: var(--Text-Color, #27292b);
+        color: #F0F5FB;
+        font-family: Rubik;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        border-radius: 1rem;
+        min-width: 8rem;
+    }

@@ -19,7 +19,7 @@
     width: 2.2rem;
     height: 2.2rem;
     line-height: 2.2rem;
-    border-radius: .5rem;
+    border-radius: 50%;
 }
 
 /* Shrink the month/year header section */
@@ -50,8 +50,17 @@
 .MobileCalendar .sapUiCalItemNow>.sapUiCalItemText,
 .MobileCalendar .sapUiCalItem.sapUiCalItemNow {
     border: 1px solid #203857;
-    border-radius: .5rem;
+    border-radius: 50%;
     line-height: 2.2rem;
+}
+.MobileCalendar .sapUiCalItem:focus>.sapUiCalItemText:after{
+    border: unset;
+}
+.MobileCalendar .sapUiCalItemNow:not(.sapUiCalItemSelBetween)>.sapUiCalItemText{
+    line-height: 2.2rem;
+}
+.MobileCalendar .sapUiCalItem.sapUiCalItemNow.sapUiCalItemSelBetween>.sapUiCalItemText{
+    color: white;
 }
 
 .MobileCalendarDialogBody{

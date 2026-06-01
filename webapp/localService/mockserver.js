@@ -1,9 +1,8 @@
 sap.ui.define([
 	"sap/ui/thirdparty/jquery",
-	"sap/ui/core/date/UI5Date",
 	"sap/ui/core/util/MockServer",
 	"sap/base/Log"
-], (jQuery, UI5Date, MockServer, Log) => {
+], (jQuery,  MockServer, Log) => {
 	"use strict";
 
 	return {

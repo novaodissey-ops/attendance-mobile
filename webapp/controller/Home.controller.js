@@ -27,7 +27,72 @@ sap.ui.define(
             greeting = this.oBundle.getText("GoodAfternoon");
           } else {
             greeting = this.oBundle.getText("GoodEvening");
-          }  
+          }; 
+
+          var update = {
+            "IvCaller": "",
+            "IvPdsnr": "",
+            "IvUserName": "",
+            "IvPersonnelNumber": "",
+            "IvBegda": {},
+            "IvEndda": {},
+            "IvActionType": "",
+            "IvEventype": "",
+            "IvBeguz": "",
+            "IvEnduz": "",
+            "IvSubtyp": "",
+            "IvAbwgr": "",
+            "IvComment": "",
+            "IvPt60": "",
+            "IvApp": "",
+            "Approval": "",
+            "EvUpdStatus": "",
+            "EvCodeMessage": "",
+            "EvTextMessage": "",
+            "EvTypeMessage": "",
+            "ApproveData": [],
+            "MessageReturn": []
+          };
+          var menuActions = [{Title: this.oBundle.getText("EditAttendance"), 
+                              Icon: "../css/images/Calendar.svg",
+                              ActionType: "itemAction",
+                              Action: "EditAttendance",
+                              visible: true},
+                            {Title: this.oBundle.getText("EditAbcense"), 
+                              Icon: "../css/images/CalendarClose.svg",
+                              ActionType: "itemAction",
+                              Action: "EditAbcense",
+                              visible: true},
+                            {Title: this.oBundle.getText("EditShift"), 
+                              Icon: "sap-icon://dark-mode",
+                              ActionType: "itemAction",
+                              Action: "EditShift",
+                              visible: true},
+                            {Title: this.oBundle.getText("EditRemark"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "itemAction",
+                              Action: "EditRemark",
+                              visible: true},
+                            {Title: this.oBundle.getText("EditFreeDay"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "itemAction",
+                              Action: "EditFreeDay",
+                              visible: true},
+                            {Title: this.oBundle.getText("CancelFreeDay"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "itemAction",
+                              Action: "CancelFreeDay",
+                              visible: true},
+                            {Title: this.oBundle.getText("EditNightShift"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "itemAction",
+                              Action: "EditNightShift",
+                              visible: true},
+                            {Title: this.oBundle.getText("CancelNightShift"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "itemAction",
+                              Action: "CancelNightShift",
+                              visible: true}];
 
           const oModel = new JSONModel({
             isCheckedIn: false,
@@ -39,6 +104,9 @@ sap.ui.define(
             navigation: [],
             ReasonsList: [],
             Entries: [],
+            Month: {},
+            Data: JSON.parse(JSON.stringify(update)),  
+            menuAction: JSON.parse(JSON.stringify(menuAction)), 
             DailyReport: {"Remark": "", 
                           "RemarkDef": this.oBundle.getText("DailyRemark"),
                           "Reason": "", 
@@ -55,7 +123,7 @@ sap.ui.define(
                           "Approve": false},
             AnsenceReport: {"Reason": "",
                             "ReasonDef": this.oBundle.getText("AbsenceReasonSelect"),
-                            "Absence": {"ReportHours" : false,
+                            "Absence": {"ReportHours" : true,
                                         "ReportFullDays" : false,
                                         "CompleteDay" : false,
                                         "PeriodReport" : false,
@@ -64,6 +132,7 @@ sap.ui.define(
                                         "AddFile" : false,
                                         "ReportComment" : false,
                                         "AdditionalAbsenceData" : false},
+                                                                 
                             "Period": null,
                             "PeriodDef": this.oBundle.getText("AbsencePeriod"),
                             "Hours": "",
@@ -75,7 +144,10 @@ sap.ui.define(
                             
                             "Approve": false},              
             WorkArrangement: {"Month": true,
-                              "Week": false}                                        
+                              "Week": false},                                  
+            RemarkDialog: {"Title": "",
+                           "Text": "",
+                           "ActionType": ""}                              
           });
 
           this.getView().setModel(oModel, "clockModel");
@@ -118,52 +190,7 @@ sap.ui.define(
         */
         },
         changeMonthToHeb: function (month) {
-          switch (month) {
-            case "01":
-              return this.oBundle.getText("January");
-              break;
-            case "02":
-              return this.oBundle.getText("February");
-              break;
-
-            case "03":
-              return this.oBundle.getText("March");
-              break;
-
-            case "04":
-              return this.oBundle.getText("April");
-              break;
-
-            case "05":
-              return this.oBundle.getText("May");
-              break;
-
-            case "06":
-              return this.oBundle.getText("June");
-              break;
-
-            case "07":
-              return this.oBundle.getText("July");
-              break;
-
-            case "08":
-              return this.oBundle.getText("August");
-              break;
-
-            case "09":
-              return this.oBundle.getText("September");
-              break;
-
-            case "10":
-              return this.oBundle.getText("October");
-              break;
-            case "11":
-              return this.oBundle.getText("November");
-              break;
-            case "12":
-              return this.oBundle.getText("December");
-              break;
-          }
+ 
         },
         onHBoxPress: function (oEvent) {
           sap.m.MessageToast.show("ה-HBox נלחץ!");
@@ -358,27 +385,49 @@ sap.ui.define(
           var sRoute = oEvent.getParameter("listItem").data("route");
           if (sRoute){
             this.loadFragments(this, sRoute, this._Page);
-          }
-          sRoute = oEvent.getParameter("listItem").data("itemAction");
-          if (sRoute){
-            var popover = oEvent.getParameter("listItem").getParent().getParent();
-            if (popover){
-              var item = popover._oOpenBy.getParent().getBindingContext("clockModel").getObject();
-              popover.close();
-              oModel.setProperty("/DailyItem", item);
-              var editPath = popover._oOpenBy.getParent().getBindingContext("clockModel").sPath;
-              switch(sRoute){
-                case "EditMonthlyEntrie":
-                  item.Editable = true;
-                  oModel.setProperty(editPath, item);
-                  oModel.refresh(false);
-                  break;
-                case "DeleteMonthlyEntrie":
-                  break;
-                case "ViewMonthlyEntrie":
-                  this.OpenDialogScreen.call(this, "DailySummaryDetails");
-                  break;
+          }else{
+            sRoute = oEvent.getParameter("listItem").data("itemAction");
+            if (sRoute){
+              var popover = oEvent.getParameter("listItem").getParent().getParent();
+              if (popover){
+                var item = popover._oOpenBy.getParent().getBindingContext("clockModel").getObject();
+                popover.close();
+                oModel.setProperty("/DailyItem", item);
+                var editPath = popover._oOpenBy.getParent().getBindingContext("clockModel").sPath;
+                switch(sRoute){
+                  case "EditMonthlyEntrie":
+                    item.Editable = true;
+                    oModel.setProperty(editPath, item);
+                    oModel.refresh(false);
+                    break;
+                  case "DeleteMonthlyEntrie":
+                    break;
+                  case "ViewMonthlyEntrie":
+                    this.OpenDialogScreen.call(this, "DailySummaryDetails");
+                    break;
+                  case "EditRemark":
+                    oModel.setProperty("/RemarkDialog/Title", oEvent.getParameter("listItem").getTitle());
+                    oModel.setProperty("/RemarkDialog/Text", item.Comment);
+                    oModel.setProperty("/RemarkDialog/ActionType", "7");
+                    this.OpenDialogScreen.call(this, "RemarkUpdate");
+                    break;
 
+                }
+              }
+            }else{
+              sRoute = oEvent.getParameter("listItem").data("headerAction");
+              if (sRoute){
+                switch(sRoute){
+                  case "monthlyRemark":
+                    
+                    oModel.setProperty("/RemarkDialog/Title", oEvent.getParameter("listItem").getTitle());
+                    oModel.setProperty("/RemarkDialog/Text", oModel.getProperty("/Month/MonthlyEmployeeComment"));
+                    oModel.setProperty("/RemarkDialog/ActionType", "17");
+                    this.OpenDialogScreen.call(this, "RemarkUpdate");
+                    break;
+                  default:
+                    break;  
+                }
               }
             }
           }
@@ -455,13 +504,19 @@ sap.ui.define(
               var totalAbsence = 0;
               for (var i = 0; i < oData.results[0].AttAbsNav.results.length; i++){
                 var dailyItem = structuredClone(oData.results[0].AttAbsNav.results[i]);
+                dailyItem.menuAction = JSON.parse(JSON.stringify(oModel.getProperty("/menuAction")));
                 
                 if (oData.results[0].AttAbsNav.results[i].Datum === null){
                   oModel.setProperty("/MonthlyReport/AttendanceTotals", dailyItem);
+                  
                 }else{
                   dailyItem.Error = false;
                   dailyItem.Absence = false;
                   dailyItem.Editable = false;
+                  var menu = dailyItem.menuAction.find((element) => element.Action === "EditFreeDay" && element.ActionType === "headerAction");
+                  if (dailyItem.PlannedWorkinHours === "0.00"){
+                    menu.visible = false;
+                  }
                   if (dailyItem.Trriger1 !== "0.00"){
                     dailyItem.Error = true;
                     totalErrors++;
@@ -494,32 +549,27 @@ sap.ui.define(
               oModel.setProperty("/MonthlyReport/AttFilter/1/count", totalErrors);
               oModel.setProperty("/MonthlyReport/AttFilter/2/count", totalAbsence);
               oModel.setProperty("/MonthlyReport/Balance", balance);
+              oModel.setProperty("/Month", oData.results[0].MonthNav.results[0]);
               oModel.refresh(false);
             },
             error: function(oEvent){debugger;}
           });
         },
 
-        MobOnMonthChange: function(oEvent){
-          var that = this;
-          var picker = new sap.m.DatePicker({
-            displayFormat: "yyyyMM",
-            valueFormat: "yyyyMM",
-            change: function(oEvent){
-              var period = oEvent.getParameter("value");
-              if (period !== ""){
-                that.MobReadAttendanceData(period);
-              }
-            }
-          });
+        MobOnMonthNavigate: function(oEvent){
+          var picker = oEvent.getSource();
           
-          picker.openBy(oEvent.getSource());
           picker._oPopup.addStyleClass("MobileDetailsDialog");
           picker._oPopup._oCloseButton.addStyleClass("MobileButtonMenu");
           picker._oPopup._oControl._header.addStyleClass("MobileCalendarDialogBody")
           picker._oCalendar.addStyleClass("MobileCalendarMonth")
         },
-
+        MobOnMonthChange: function(oEvent){
+          var period = oEvent.getParameter("value");
+          if (period !== ""){
+            this.MobReadAttendanceData(period);
+          }
+        },
         MobClockPress: function(oEvent){
           oEvent.getSource().removeSelections();
 
@@ -654,7 +704,57 @@ sap.ui.define(
           oModel.refresh(false);
         },
         MobAbsenceCalendarSelect: function(oEvent){
-          
+          var oModel = this.getView().getModel("clockModel");
+          var oSelectedDates = oEvent.getSource().getSelectedDates()[0];
+          var oFormatYyyymmdd = sap.ui.core.format.DateFormat.getInstance({pattern: "dd.MM.yyyy", calendarType: 'Gregorian'});
+          if (oSelectedDates) {
+            var oDate = oSelectedDates.getStartDate();
+              if (oDate) {
+                oModel.setProperty("/Data/IvBegda", oDate);
+                var text = oFormatYyyymmdd.format(oDate);
+              } 
+              oDate = oSelectedDates.getEndDate();
+              if (oDate) {
+                oModel.setProperty("/Data/IvEndda", oDate);
+                text = text + ' - ' + oFormatYyyymmdd.format(oDate);
+              }
+              oEvent.getSource().getParent().setHeaderText(text);
+          }
+        },
+        MobUploadAttachment: function(oEvent)  {
+          var oModel = this.getView().getModel("clockModel");
+          var domRef = oEvent.getSource().getFocusDomRef();
+          var file = domRef.files[0];
+          var reader = new FileReader();
+          reader.onload = function(oEvent) {
+            oModel.setProperty("/MonthlyReport/Attachment", {name: file.name, data: oEvent.target.result})
+          };
+          reader.readAsDataURL(file);
+          oEvent.getSource().getParent().setHeaderText(file.name);
+        },
+        MobSaveRemark: function(oEvent){
+          var oModel = this.getView().getModel("clockModel");
+          var remark = oModel.getProperty("/RemarkDialog");
+          var update = JSON.parse(JSON.stringify(oModel.getProperty("/Data")));
+            update.IvCaller = "1";
+            update.IvPdsnr = "";
+            update.IvUserName = "";
+            update.IvPersonnelNumber = "";
+            update.IvBegda = remark.ActionType === "7"? oModel.getProperty("/DailyItem/Datum"):null;
+            update.IvEndda = remark.ActionType === "7"? oModel.getProperty("/DailyItem/Datum"):null;
+            update.IvActionType = remark.ActionType;
+            update.IvEventype = "";
+            update.IvBeguz = "";
+            update.IvEnduz = "";
+            update.IvSubtyp = "";
+            update.IvAbwgr = "";
+            update.IvComment = remark.Text;
+            update.IvPt60 = "";
+            update.IvApp = "P";
+
+            this.saveDetais(update);
+            this.CloseDialogScreen(oEvent);
+            
         }
       },
     );

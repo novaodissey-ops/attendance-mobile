@@ -53,6 +53,18 @@
         "IvEcecutePt60" : "",
         "Trriger2" : "0.00"
 
-    }           
+    },
+    {
+      "IvCaller" : "1",
+        "TriggerText1" : "",
+        "IvUserName" : "",
+        "IvPersonnelNumber" : "00232256",
+        "IvPeriod" : "202606",
+        "IvScreenType" : "0",
+        "IvIncludeCancelledRecord" : "",
+        "IvEcecutePt60" : "",
+        "Trriger2" : "0.00"
+
+    }                  
 
     ]

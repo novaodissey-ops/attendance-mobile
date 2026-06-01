@@ -77,7 +77,36 @@
             width="auto" 
             class="sapUiResponsiveMargin MobilePanel sapMBtnIconLeft">
                 <content>
-
+                    <HBox justifyContent="SpaceBetween" alignItems="Center">
+                        <Label text="{i18n>FullDay}" class="MobileLabelTextBold"/>
+                        <HBox>
+                        <Switch state="{clockModel>/AnsenceReport/Absence/CompleteDay}" customTextOn=" " customTextOff=" ">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Switch>
+                        </HBox>
+                    </HBox>
+                    <HBox justifyContent="SpaceBetween"
+                    visible="{= ${clockModel>/AnsenceReport/Absence/CompleteDay}?false:true }">
+                        <VBox>
+                            <Label text="{i18n>enter}" class="MobileLabelTextBold"/>
+                            <TimePicker class="MoblieTimePicker"
+                            value="{clockModel>Data/IvBeguz}"
+                            valueFormat="HH:mm:ss"
+                            displayFormat="HH:mm"
+                            change=".handleChange"/>
+                            
+                        </VBox>
+                        <VBox>
+                            <Label text="{i18n>exit}" class="MobileLabelTextBold"/>
+                            <TimePicker class="MoblieTimePicker"
+                            value="{clockModel>Data/IvEnduz}"
+                            valueFormat="HH:mm:ss"
+                            displayFormat="HH:mm"
+                            change=".handleChange"/>
+                        </VBox>
+                    </HBox>
                 </content>
             </Panel>    
             <Panel visible="{clockModel>/AnsenceReport/Absence/AddFile}"
@@ -87,7 +116,10 @@
             width="auto" 
             class="sapUiResponsiveMargin MobilePanel sapMBtnIconLeft">
                 <content>
-
+                    <u:FileUploader class="MobileFileUploader"
+                        uploadUrl="upload/"
+                        uploadOnChange="true"
+                        uploadComplete=".MobUploadAttachment"/>
                 </content>
             </Panel>  
             <Panel 

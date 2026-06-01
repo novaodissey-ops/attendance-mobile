@@ -14,12 +14,19 @@
                     press=".onBack"/>   
                 <VBox width="100%">       
                     <Label text="{i18n>MonthlyAttendance}" class="MobileMediumText sapUiMediumMarginBeginEnd"/>
+                    
                 </VBox>
-                <Button
+                <DatePicker
+					displayFormat= "yyyyMM"
+                    valueFormat= "yyyyMM"
+                    navigate=".MobOnMonthNavigate"
+                    change=".MobOnMonthChange"
+                    class="MobileDatePicker"/>
+                <!-- <Button
                     class="MobileButtonMenu"
                     icon="../css/images/CalendarAtt.svg"
                     iconDensityAware="false"
-                    press=".MobOnMonthChange"/>   
+                    press=".MobOnMonthChange"/>    -->
         </HBox>   
 
         <VBox height="100%">
@@ -35,7 +42,6 @@
                 <List inset="false" 
                 mode="SingleSelectMaster" 
                 items="{path: 'clockModel>/MonthlyReport/Attendance', templateShareable: false}"
-                noData=" "
                 selectionChange=".MobOnMonthlyReportDay">
                     <headerToolbar>
                         <OverflowToolbar>

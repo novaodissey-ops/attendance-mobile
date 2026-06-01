@@ -173,6 +173,9 @@ sap.ui.define(
           this.getView().byId("messageBox").removeAllItems();
           this.getView().byId("messageBox").addItem(strip);
           this.getView().byId("messageBox").setVisible(true);
+        },
+        saveDetais: function(entity){
+            
         }
       }
     );

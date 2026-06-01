@@ -1,0 +1,40 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    core:require="{formatter: 'attendanceshabas/attendanceshabas/model/formatter'}">
+	<Dialog
+		class="MobileDetailsDialog"
+		stretch="true"
+		showHeader="false">
+		<VBox class="MobileDetailsDialogBody"
+			height="100%">
+			<HBox class="MobileMenuFooter" justifyContent="SpaceBetween" alignItems="Center">
+				<VBox height="100%">
+					<HBox alignItems="Center">
+						<Text class="MobileLabel2TextBold" 
+							text="{clockModel>/RemarkDialog/Title}"/>
+						<Text class="MobileLabel2TextBold sapUiMediumMarginBeginEnd"
+							text="{ path: 'clockModel>/Entries/0/Datum',
+				                    type: 'sap.ui.model.type.Date',
+				                    formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+					</HBox>
+				</VBox>
+				<Button
+                class="MobileButtonMenu"
+                icon="sap-icon://decline"
+                press="CloseDialogScreen"/> 
+			</HBox>
+			<TextArea class="MobileTextArea" 
+                    width="100%" 
+                    rows="12" 
+					maxLength="250"
+                    value="{clockModel>/RemarkDialog/Text}"/>
+			<VBox height="10rem" justifyContent="End" alignItems="Center">
+				<Button text="{i18n>Approve}" 
+					press=".MobSaveRemark"
+					class="MobileDarkButton"/>
+			</VBox>		
+		</VBox>
+		
+	</Dialog>
+</core:FragmentDefinition>

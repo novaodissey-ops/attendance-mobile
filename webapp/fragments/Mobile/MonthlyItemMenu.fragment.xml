@@ -54,7 +54,7 @@
                     icon="sap-icon://text-align-justified"
                     iconDensityAware="false">
                     <customData>
-                        <core:CustomData key="itemAction" value="ViewMonthlyEntrie"/>
+                        <core:CustomData key="itemAction" value="DailyRemark"/>
                     </customData>
                 </StandardListItem>
             </List>

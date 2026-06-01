@@ -1,5 +1,7 @@
 @import url("Elements/Button.css");
 @import url("Elements/Calendar.css");
+@import url("Elements/DatePicker.css");
+@import url("Elements/FileUploader.css");
 @import url("Elements/Menu.css");
 @import url("Elements/MessageStrip.css");
 @import url("Elements/Panel.css");
@@ -7,6 +9,7 @@
 @import url("Elements/Select.css");
 @import url("Elements/Switch.css");
 @import url("Elements/TextArea.css");
+@import url("Elements/TimePicker.css");
 @import url("Elements/ToggleButton.css");
 
 .MainScreenClock{
@@ -324,15 +327,7 @@
         font-style: normal;
         font-weight: 500;
     }
-    .MobileApproveButton .sapMBtnInner{
-        color: var(--Text-Color, #27292b);
-        font-family: Rubik;
-        font-size: 1rem;
-        font-style: normal;
-        font-weight: 500;
-        border-radius: 1rem;
-        min-width: 8rem;
-    }
+    
     
     .MobilePopover{
         border-radius: .5rem;

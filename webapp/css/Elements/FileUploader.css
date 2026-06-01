@@ -1,0 +1,21 @@
+.MobileFileUploader{
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+.MobileFileUploader .sapMInputBaseContentWrapper {
+    border: 0.0625rem solid #89919a;
+    background: #ffffff;
+    border-radius: 0.5rem;
+}
+.MobileFileUploader .sapMInputBaseInner,
+.MobileFileUploader .sapMBtnInner.sapMBtnText
+{
+    font-family: Rubik;
+    font-weight: 400;
+    color: #27292B;
+}
+.MobileFileUploader .sapMBtnInner.sapMBtnText
+{
+    border-radius: .5rem;
+    border-color: #27292B;
+}

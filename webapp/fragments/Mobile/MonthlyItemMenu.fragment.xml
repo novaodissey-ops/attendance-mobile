@@ -6,57 +6,28 @@
 		showHeader="false"
 		placement="Bottom">
 		<List inset="false" 
+                items="{path: 'clockModel>/menuAction', templateShareable: false,
+                        filters: [{
+                            path: 'ActionScreen',
+                            operator: 'EQ',
+                            value1: 'itemAction'
+                            }] }"
                 mode="SingleSelectMaster" 
                 selectionChange="onMenuItemPress"
                 class="sapUiMediumMarginTop">
 
                 <StandardListItem
 				class="MobileActionMenuRow"
-                    title="{i18n>MonthlyAttendance}"
-                    icon="../css/images/Calendar.svg"
+                    title="{clockModel>Title}"
+                    icon="{clockModel>Icon}"
+                    visible="{clockModel>visible}"
                     iconDensityAware="false">
                     <customData>
-                        <core:CustomData key="itemAction" value="monthlyAttendance"/>
+                        <core:CustomData key="{clockModel>ActionScreen}" value="{clockModel>Action}"/>
+                        <core:CustomData key="actionType" value="{clockModel>ActionType}"/>
                     </customData>
                 </StandardListItem>
 
-                <StandardListItem
-				class="MobileActionMenuRow"
-                    title="{i18n>AbsenceReport}"
-                    icon="../css/images/CalendarClose.svg"
-                    iconDensityAware="false">
-                    <customData>
-                        <core:CustomData key="itemAction" value="AbsenceReport"/>
-                    </customData>
-                </StandardListItem>
-
-                <StandardListItem
-				class="MobileActionMenuRow"
-                    title="{i18n>NightShift}"
-                    icon="sap-icon://dark-mode"
-                    iconDensityAware="false">
-                    <customData>
-                        <core:CustomData key="itemAction" value="AbsenceReport"/>
-                    </customData>
-                </StandardListItem>
-                <StandardListItem
-				class="MobileActionMenuRow"
-                    title="{i18n>View}"
-                    icon="sap-icon://document-text"
-                    iconDensityAware="false">
-                    <customData>
-                        <core:CustomData key="itemAction" value="ViewMonthlyEntrie"/>
-                    </customData>
-                </StandardListItem>
-                <StandardListItem
-				class="MobileActionMenuRow"
-                    title="{i18n>DailyRemark}"
-                    icon="sap-icon://text-align-justified"
-                    iconDensityAware="false">
-                    <customData>
-                        <core:CustomData key="itemAction" value="DailyRemark"/>
-                    </customData>
-                </StandardListItem>
             </List>
 	</Popover>
 </core:FragmentDefinition>

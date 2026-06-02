@@ -14,7 +14,12 @@
                                 
             </HBox>            
             <!-- Body тн List -->
-            <VBox height="100%">
+            <VBox height="100%" justifyContent="Start">
+            <ScrollContainer
+                height="100%"
+                width="100%"
+                vertical="true"
+                focusable="true">
             <List inset="false" 
                 mode="SingleSelectMaster" 
                 selectionChange="onMenuItemPress"
@@ -71,6 +76,7 @@
                 </StandardListItem>
 
             </List>
+            </ScrollContainer>
             </VBox>
             <!-- Footer -->
             <HBox justifyContent="Center" alignItems="Center" class="MobileMenuFooter">

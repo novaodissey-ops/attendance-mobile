@@ -55,43 +55,81 @@ sap.ui.define(
           };
           var menuActions = [{Title: this.oBundle.getText("EditAttendance"), 
                               Icon: "../css/images/Calendar.svg",
-                              ActionType: "itemAction",
+                              ActionType: "1",
+                              ActionScreen: "itemAction",
                               Action: "EditAttendance",
-                              visible: true},
+                              visible: false},
                             {Title: this.oBundle.getText("EditAbcense"), 
                               Icon: "../css/images/CalendarClose.svg",
-                              ActionType: "itemAction",
+                              ActionType: "3",
+                              ActionScreen: "itemAction",
                               Action: "EditAbcense",
-                              visible: true},
+                              visible: false},
                             {Title: this.oBundle.getText("EditShift"), 
                               Icon: "sap-icon://dark-mode",
-                              ActionType: "itemAction",
+                              ActionType: "12",
+                              ActionScreen: "itemAction",
                               Action: "EditShift",
-                              visible: true},
-                            {Title: this.oBundle.getText("EditRemark"), 
-                              Icon: "sap-icon://text-align-justified",
-                              ActionType: "itemAction",
-                              Action: "EditRemark",
-                              visible: true},
+                              visible: false},
+                            {Title: this.oBundle.getText("CancelShift"), 
+                              Icon: "sap-icon://dark-mode",
+                              ActionType: "12",
+                              ActionScreen: "itemAction",
+                              Action: "ECancelShift",
+                              visible: false},  
                             {Title: this.oBundle.getText("EditFreeDay"), 
                               Icon: "sap-icon://text-align-justified",
-                              ActionType: "itemAction",
+                              ActionType: "13",
+                              ActionScreen: "itemAction",
                               Action: "EditFreeDay",
-                              visible: true},
+                              visible: false},
                             {Title: this.oBundle.getText("CancelFreeDay"), 
                               Icon: "sap-icon://text-align-justified",
-                              ActionType: "itemAction",
+                              ActionType: "14",
+                              ActionScreen: "itemAction",
                               Action: "CancelFreeDay",
-                              visible: true},
+                              visible: false},
                             {Title: this.oBundle.getText("EditNightShift"), 
-                              Icon: "sap-icon://text-align-justified",
-                              ActionType: "itemAction",
+                              Icon: "sap-icon://bell",
+                              ActionType: "15",
+                              ActionScreen: "itemAction",
                               Action: "EditNightShift",
-                              visible: true},
+                              visible: false},
                             {Title: this.oBundle.getText("CancelNightShift"), 
-                              Icon: "sap-icon://text-align-justified",
-                              ActionType: "itemAction",
+                              Icon: "sap-icon://bell",
+                              ActionType: "16",
+                              ActionScreen: "itemAction",
                               Action: "CancelNightShift",
+                              visible: false},
+                            {Title: this.oBundle.getText("EditAlert"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "18",
+                              ActionScreen: "itemAction",
+                              Action: "EditAlert",
+                              visible: false},
+                            {Title: this.oBundle.getText("CancelAlert"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "19",
+                              ActionScreen: "itemAction",
+                              Action: "CancelAlert",
+                              visible: false},
+                            {Title: this.oBundle.getText("View"), 
+                              Icon: "sap-icon://detail-view",
+                              ActionType: "0",
+                              ActionScreen: "itemAction",
+                              Action: "ViewDetails",
+                              visible: true},    
+                            {Title: this.oBundle.getText("EditRemark"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "7",
+                              ActionScreen: "itemAction",
+                              Action: "EditRemark",
+                              visible: true},  
+                            {Title: this.oBundle.getText("EditRemark"), 
+                              Icon: "sap-icon://text-align-justified",
+                              ActionType: "17",
+                              ActionScreen: "headerAction",
+                              Action: "EditRemark",
                               visible: true}];
 
           const oModel = new JSONModel({
@@ -106,7 +144,7 @@ sap.ui.define(
             Entries: [],
             Month: {},
             Data: JSON.parse(JSON.stringify(update)),  
-            menuAction: JSON.parse(JSON.stringify(menuAction)), 
+            menuAction: JSON.parse(JSON.stringify(menuActions)), 
             DailyReport: {"Remark": "", 
                           "RemarkDef": this.oBundle.getText("DailyRemark"),
                           "Reason": "", 
@@ -123,7 +161,7 @@ sap.ui.define(
                           "Approve": false},
             AnsenceReport: {"Reason": "",
                             "ReasonDef": this.oBundle.getText("AbsenceReasonSelect"),
-                            "Absence": {"ReportHours" : true,
+                            "Absence": {"ReportHours" : false,
                                         "ReportFullDays" : false,
                                         "CompleteDay" : false,
                                         "PeriodReport" : false,
@@ -385,52 +423,56 @@ sap.ui.define(
           var sRoute = oEvent.getParameter("listItem").data("route");
           if (sRoute){
             this.loadFragments(this, sRoute, this._Page);
-          }else{
-            sRoute = oEvent.getParameter("listItem").data("itemAction");
-            if (sRoute){
-              var popover = oEvent.getParameter("listItem").getParent().getParent();
-              if (popover){
-                var item = popover._oOpenBy.getParent().getBindingContext("clockModel").getObject();
-                popover.close();
-                oModel.setProperty("/DailyItem", item);
-                var editPath = popover._oOpenBy.getParent().getBindingContext("clockModel").sPath;
-                switch(sRoute){
-                  case "EditMonthlyEntrie":
-                    item.Editable = true;
-                    oModel.setProperty(editPath, item);
-                    oModel.refresh(false);
-                    break;
-                  case "DeleteMonthlyEntrie":
-                    break;
-                  case "ViewMonthlyEntrie":
-                    this.OpenDialogScreen.call(this, "DailySummaryDetails");
-                    break;
-                  case "EditRemark":
-                    oModel.setProperty("/RemarkDialog/Title", oEvent.getParameter("listItem").getTitle());
-                    oModel.setProperty("/RemarkDialog/Text", item.Comment);
-                    oModel.setProperty("/RemarkDialog/ActionType", "7");
-                    this.OpenDialogScreen.call(this, "RemarkUpdate");
-                    break;
-
-                }
-              }
-            }else{
-              sRoute = oEvent.getParameter("listItem").data("headerAction");
-              if (sRoute){
-                switch(sRoute){
-                  case "monthlyRemark":
-                    
-                    oModel.setProperty("/RemarkDialog/Title", oEvent.getParameter("listItem").getTitle());
-                    oModel.setProperty("/RemarkDialog/Text", oModel.getProperty("/Month/MonthlyEmployeeComment"));
-                    oModel.setProperty("/RemarkDialog/ActionType", "17");
-                    this.OpenDialogScreen.call(this, "RemarkUpdate");
-                    break;
-                  default:
-                    break;  
-                }
-              }
-            }
+            return;
           }
+          sRoute = oEvent.getParameter("listItem").data("itemAction");
+          if (sRoute){
+            var popover = oEvent.getParameter("listItem").getParent().getParent();
+            if (popover){
+              var item = popover._oOpenBy.getParent().getBindingContext("clockModel").getObject();
+              popover.close();
+              oModel.setProperty("/DailyItem", item);
+              var editPath = popover._oOpenBy.getParent().getBindingContext("clockModel").sPath;
+              switch(sRoute){
+                case "EditMonthlyEntrie":
+                  item.Editable = true;
+                  oModel.setProperty(editPath, item);
+                  oModel.refresh(false);
+                  break;
+                case "DeleteMonthlyEntrie":
+                  break;
+                case "ViewMonthlyEntrie":
+                  this.OpenDialogScreen.call(this, "DailySummaryDetails");
+                  break;
+                case "ViewDetails" :
+                  this.MobOnMonthlyReportDay(oEvent);
+                  break;
+                case "EditRemark":
+                  oModel.setProperty("/RemarkDialog/Title", oEvent.getParameter("listItem").getTitle());
+                  oModel.setProperty("/RemarkDialog/Text", item.Comment);
+                  oModel.setProperty("/RemarkDialog/ActionType", "7");
+                  this.OpenDialogScreen.call(this, "RemarkUpdate");
+                  break;
+               }
+              }
+              return;
+            }
+            sRoute = oEvent.getParameter("listItem").data("headerAction");
+            if (sRoute){
+              switch(sRoute){
+                case "monthlyRemark":
+                  
+                  oModel.setProperty("/RemarkDialog/Title", oEvent.getParameter("listItem").getTitle());
+                  oModel.setProperty("/RemarkDialog/Text", oModel.getProperty("/Month/MonthlyEmployeeComment"));
+                  oModel.setProperty("/RemarkDialog/ActionType", "17");
+                  this.OpenDialogScreen.call(this, "RemarkUpdate");
+                  break;
+                default:
+                  break;  
+              }
+              return;
+            }
+                   
           //const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
           //oRouter.navTo(sRoute);
 
@@ -513,10 +555,52 @@ sap.ui.define(
                   dailyItem.Error = false;
                   dailyItem.Absence = false;
                   dailyItem.Editable = false;
-                  var menu = dailyItem.menuAction.find((element) => element.Action === "EditFreeDay" && element.ActionType === "headerAction");
-                  if (dailyItem.PlannedWorkinHours === "0.00"){
-                    menu.visible = false;
+
+                  var menu = dailyItem.menuAction;
+
+                  if (dailyItem.Trriger2 === "2.00" ||
+                      dailyItem.Trriger2 === "3.00" ||
+                      dailyItem.Trriger2 === "4.00" ||
+                      dailyItem.Trriger2 === "5.00" ||
+                      dailyItem.Trriger2 === "6.00") {
+                    menu.find((element) => element.Action === "EditAttendance" && element.ActionScreen === "itemAction").visible = true;
                   }
+                  if (dailyItem.Trriger2 === "2.00" ||
+                      dailyItem.Trriger2 === "3.00" ||
+                      dailyItem.Trriger2 === "5.00" ||
+                      dailyItem.Trriger2 === "6.00") {
+                    menu.find((element) => element.Action === "EditAbcense" && element.ActionScreen === "itemAction").visible = true;
+                  }
+                  if (dailyItem.Trriger2 === "2.00") {
+                    if (dailyItem.PlannedWorkinHours === "0.00"){
+                    menu.find((element) => element.Action === "CancelFreeDay" && element.ActionScreen === "itemAction").visible = true;
+                    }else{
+                    menu.find((element) => element.Action === "EditFreeDay" && element.ActionScreen === "itemAction").visible = true;  
+                    }
+                  }
+                  if (dailyItem.Trriger2 === "3.00") {
+                    if (dailyItem.PlannedWorkinHours === "0.00"){
+                    menu.find((element) => element.Action === "CancelShift" && element.ActionScreen === "itemAction").visible = true;
+                    }else{
+                    menu.find((element) => element.Action === "EditShift" && element.ActionScreen === "itemAction").visible = true;  
+                    }
+                  }
+                  if (dailyItem.Trriger2 === "5.00") {
+                    if (dailyItem.Trriger3 === "0.00"){
+                    menu.find((element) => element.Action === "EditNightShift" && element.ActionScreen === "itemAction").visible = true;
+                    }else{
+                    menu.find((element) => element.Action === "CancelNightShift" && element.ActionScreen === "itemAction").visible = true;  
+                    }
+                  }
+                  if (dailyItem.Trriger2 === "6.00") {
+                    if (dailyItem.Trriger3 === "0.00"){
+                    menu.find((element) => element.Action === "EditAlert" && element.ActionScreen === "itemAction").visible = true;
+                    }else{
+                    menu.find((element) => element.Action === "CancelAlert" && element.ActionScreen === "itemAction").visible = true;  
+                    }
+                  }
+                 
+                  
                   if (dailyItem.Trriger1 !== "0.00"){
                     dailyItem.Error = true;
                     totalErrors++;
@@ -664,7 +748,14 @@ sap.ui.define(
         },
         MobOnMonthlyReportDay: function(oEvent){
           oEvent.getSource().removeSelections();
-          var entries = oEvent.getParameter("listItem").getBindingContext("clockModel").getObject().Entries;
+          if (oEvent.getParameter("listItem")){
+            var entries = oEvent.getParameter("listItem").getBindingContext("clockModel").getObject().Entries;
+          }
+          
+          if (! entries && oEvent.getSource().getParent()._oOpenBy
+            && oEvent.getSource().getParent()._oOpenBy.getParent().getParent().getParent().getMetadata().getName() === 'sap.m.CustomListItem'){
+            entries = oEvent.getSource().getParent()._oOpenBy.getParent().getParent().getParent().getBindingContext("clockModel").getObject().Entries;
+          }
           if (entries.length){
             this.getView().getModel("clockModel").setProperty("/Entries", entries);
             this.getView().getModel("clockModel").refresh(false);
@@ -690,6 +781,10 @@ sap.ui.define(
           this.OpenActionMenu("EntriesDetailsMenu", oEvent.getSource());
         },
         MobOnMonthlyItemMenu: function(oEvent){
+          var menu = oEvent.getSource().getParent().getBindingContext("clockModel").getObject().menuAction;
+          this.getView().getModel("clockModel").setProperty("/menuAction", menu);
+          this.getView().getModel("clockModel").refresh(false);
+                  
           this.OpenActionMenu("MonthlyItemMenu", oEvent.getSource());
         },
         MobMonthlyAttendActions: function(oEvent){

@@ -78,18 +78,28 @@
                             
                             <List items="{path: 'clockModel>Entries', templateShareable: false}">
                                 <CustomListItem class="MobileEntryRow">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="MobileMonthRowDayItem">
-                                    <HBox>
-                                        <Label text="{i18n>enter}" 
-                                            visible="{path: 'clockModel>TimeOfEntrance', formatter: 'formatter.isVisible'}" 
-                                            class="MobileLabelText sapUiTinyMarginEnd"/>
-                                        <Label text="{path: 'clockModel>TimeOfEntrance', formatter: 'formatter.stringToHours'}" class="MobileLabelText sapUiTinyMarginEnd"/>
-                                        <Label text="{i18n>exit}" 
-                                            visible="{path: 'clockModel>TimeOfGoingOut', formatter: 'formatter.isVisible'}" 
-                                            class="MobileLabelText sapUiTinyMarginEnd"/>
-                                        <Label text="{path: 'clockModel>TimeOfGoingOut', formatter: 'formatter.stringToHours'}" class="MobileLabelText"/>
-
-                                    </HBox>
+                                    <HBox justifyContent="SpaceBetween" alignItems="Start" class="MobileMonthRowDayItem">
+                                    <VBox>
+                                        <HBox height="3rem" visible="{= !${parts: [{path: 'clockModel>TimeOfEntrance'},
+                                                                     {path: 'clockModel>TimeOfGoingOut'},
+                                                                     {path: 'clockModel>RecordCode'}], 
+                                        formatter: 'formatter.isVisible'}}" />
+                                        
+                                        <HBox visible="{parts: [{path: 'clockModel>TimeOfEntrance'},
+                                                                {path: 'clockModel>TimeOfGoingOut'}], 
+                                        formatter: 'formatter.isVisible'}" >
+                                            <Label text="{i18n>enter}" 
+                                                visible="{path: 'clockModel>TimeOfEntrance', formatter: 'formatter.isVisible'}" 
+                                                class="MobileLabelText sapUiTinyMarginEnd"/>
+                                            <Label text="{path: 'clockModel>TimeOfEntrance', formatter: 'formatter.stringToHours'}" class="MobileLabelText sapUiTinyMarginEnd"/>
+                                            <Label text="{i18n>exit}" 
+                                                visible="{path: 'clockModel>TimeOfGoingOut', formatter: 'formatter.isVisible'}" 
+                                                class="MobileLabelText sapUiTinyMarginEnd"/>
+                                            <Label text="{path: 'clockModel>TimeOfGoingOut', formatter: 'formatter.stringToHours'}" class="MobileLabelText"/>
+                                        </HBox>
+                                        <Label text="{clockModel>TextForRecordCode}" visible="{path: 'clockModel>RecordCode', formatter: 'formatter.isVisible'}"
+                                        class="MobileLabelTextEmphasizeGreen"/>
+                                    </VBox>
                                     <HBox justifyContent="End" visible="{path: 'clockModel>TotalHours', formatter: 'formatter.isVisible'}" >
                                         <Label text="{i18n>totalHours}" class="MobileLabelText sapUiTinyMarginEnd"/>
                                         <Label text="{path: 'clockModel>TotalHoursDec'}" class="MobileLabelTextBold"/>

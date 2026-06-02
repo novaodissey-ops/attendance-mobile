@@ -230,6 +230,16 @@
         margin: .5rem;
         padding: .5rem;
     }
+    .MobileLabelTextEmphasizeGreen{
+        font-size: .9rem;
+        font-family: 'Rubik';
+        font-weight: 400;
+        color: #27292B;
+        background: #D5F9F3;
+        border-radius: .5rem;
+        margin: .5rem;
+        padding: 0 .5rem 0 .5rem;
+    }
     .MobileLabel2Text {
         font-size: 1.1rem;
         font-family: 'Rubik';
@@ -331,7 +341,20 @@
     
     .MobilePopover{
         border-radius: .5rem;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     }
+    .MobilePopover .sapMPopoverArr:after {
+        background: #ffffff;
+        box-shadow: 5px -5px 20px rgba(0, 0, 0, 0.5);
+    }
+    .MobilePopover .sapMSLI.sapMSLIThumbnail, 
+    .MobilePopover .sapMSLI.sapMSLINoIconInset, 
+    .MobilePopover .sapMSLI.sapMSLIWithDescription, 
+    .MobilePopover .sapMSLI.sapMSLINoTitleAdapt {
+        height: 2.75rem;
+    }
+
+
     .MobileTotalPanel{
         padding: 1rem;
         margin: 1rem;

@@ -1,1 +1,6 @@
-[]
+[{"Type": "S",
+    "Id": "CLASS",
+    "Number": "001",
+    "Message": "Message from Mock server"
+
+}]

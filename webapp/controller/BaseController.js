@@ -175,6 +175,16 @@ sap.ui.define(
           this.getView().byId("messageBox").setVisible(true);
         },
         saveDetais: function(entity){
+          var that = this;
+          var model = this.getOwnerComponent().getModel();
+          model.create("/UpdateEmpSet", entity, {
+            success: function(oData){
+              if (oData.MessageReturn.length){
+                that.showMessage(oData.MessageReturn[0].Message, "Warning");
+              }
+            },
+            error: function(oEvent){debugger;}
+          });
             
         }
       }

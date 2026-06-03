@@ -1,1 +1,9 @@
-[]
+[{
+        "DateFrom": "\/Date(1772323200000)\/",
+        "DateTo": "\/Date(1772323200000)\/",
+        "TimeOfEnter": "100000",
+        "TimeOfGoingOut": "110000", 
+        "AbbsenceType": "100",
+        "Approval": "X"
+
+}]

@@ -145,11 +145,12 @@ sap.ui.define(
             Month: {},
             Data: JSON.parse(JSON.stringify(update)),  
             menuAction: JSON.parse(JSON.stringify(menuActions)), 
-            DailyReport: {"Remark": "", 
+            DailyReport: {"CurrentClock": "B",
+                          "Remark": "", 
                           "RemarkDef": this.oBundle.getText("DailyRemark"),
                           "Reason": "", 
                           "ReasonDef": this.oBundle.getText("DailyReasonSelect"),
-                          "Approve": false},
+                          "Approve": true},
             MonthlyReport: {"Attendance": [],
                           "AttendanceTotals":{},
                           "Balance": [],
@@ -291,7 +292,8 @@ sap.ui.define(
           //this.MyMenu.open();
         },
         closeMyMenu: function () {
-          this.loadFragments(this, "MobileMainScreen", this._Page);
+          this.onBack();
+          //this.loadFragments(this, "MobileMainScreen", this._Page);
           //this.MyMenu.close();
           //this.MyMenu.destroy();
           //this.MyMenu = null;
@@ -659,12 +661,12 @@ sap.ui.define(
 
   
           var oModel = this.getView().getModel("clockModel");
-          if (oModel.getProperty("/showEntryScreen")){
+          if (oModel.getProperty("/DailyReport/CurrentClock")){
             var entry = true;
-            var event = "P10";
+            var event = "B";
           }else{
             entry = false;
-            event = "P20";
+            event = "E";
           }
           const now = new Date();
           const sTime = now.toLocaleTimeString("he-IL", {
@@ -674,21 +676,21 @@ sap.ui.define(
           oModel.setProperty("/lastTime", sTime);      
           oModel.setProperty("/isCheckedIn", true);
 
-          this.showMessage("Test111", "Warning");
+          this.loadFragments(this, "DailyReport", this._Page);
 
           this.MobSwitchClockScreen();
         },
         MobSwitchClockScreen(){
           var oModel = this.getView().getModel("clockModel");
           var circle = this.getView().byId("clockCircle");
-          if (oModel.getProperty("/showEntryScreen")){
+          if (oModel.getProperty("/DailyReport/CurrentClock") === "B"){
             circle.removeStyleClass("MobileClockCircle");
             circle.addStyleClass("MobileClockCircleExit");
-            oModel.setProperty("/showEntryScreen", false);
+            oModel.setProperty("/DailyReport/CurrentClock", "E");
           }else{
             circle.removeStyleClass("MobileClockCircleExit");
             circle.addStyleClass("MobileClockCircle");
-            oModel.setProperty("/showEntryScreen", true);
+            oModel.setProperty("/DailyReport/CurrentClock", "B");
           }
         },
         MobClockSwipe: function(oEvent){
@@ -702,9 +704,9 @@ sap.ui.define(
           oModel.setProperty("/DailyReport/Reason", item.Code);
           oEvent.getSource().getParent().getParent().setExpanded(false);
           oEvent.getSource().getParent().getParent().setHeaderText(item.TextCode);
-          if (oModel.getProperty("/DailyReport/Reason") !== "" && oModel.getProperty("/DailyReport/Remark") !== ""){
-            oModel.setProperty("/DailyReport/Approve", true);
-          }
+          //if (oModel.getProperty("/DailyReport/Reason") !== "" && oModel.getProperty("/DailyReport/Remark") !== ""){
+          //  oModel.setProperty("/DailyReport/Approve", true);
+          //}
         },
         MobDailyRemarkChange: function(oEvent){
           var oModel = this.getView().getModel("clockModel");
@@ -716,8 +718,26 @@ sap.ui.define(
         MobDailyApprove: function(oEvent){
           var oModel = this.getView().getModel("clockModel");
 
+          var update = JSON.parse(JSON.stringify(oModel.getProperty("/Data")));
+            update.IvCaller = "1";
+            update.IvPdsnr = "";
+            update.IvUserName = "";
+            update.IvPersonnelNumber = "";
+            update.IvBegda = new Date();
+            update.IvEndda = new Date();
+            update.IvActionType = "1";
+            update.IvEventype = "";
+            update.IvBeguz = "";
+            update.IvEnduz = "";
+            update.IvSubtyp = "";
+            update.IvAbwgr = oModel.getProperty("/DailyReport/Reson");
+            update.IvComment = oModel.getProperty("/DailyReport/Remark");
+            update.IvPt60 = "";
+            update.IvApp = "P";
+            update.Approval = "X";
 
-          oModel.setProperty("/DailyReport/Approve", false);
+            this.saveDetais(update);
+          //oModel.setProperty("/DailyReport/Approve", false);
           oModel.setProperty("/DailyReport/Reason", "");
           oModel.setProperty("/DailyReport/Remark", "");
           oModel.setProperty("/DailyReport/RemarkDef", this.oBundle.getText("DailyRemark"));
@@ -846,9 +866,11 @@ sap.ui.define(
             update.IvComment = remark.Text;
             update.IvPt60 = "";
             update.IvApp = "P";
+            update.Approval = "X";
 
             this.saveDetais(update);
             this.CloseDialogScreen(oEvent);
+            
             
         }
       },

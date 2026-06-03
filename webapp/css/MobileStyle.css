@@ -186,6 +186,7 @@
     .MobileReasonRow.sapMLIB.sapMLIBSelected {
         background: var(--Sky-Blue, #d7eafc);
         border-radius: 1rem;
+        border-bottom: unset;
     }
     
 

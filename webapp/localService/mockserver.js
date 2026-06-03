@@ -21,6 +21,38 @@ sap.ui.define([
 				sMockdataBaseUrl: "../localService/mockdata",
 				bGenerateMissingMockData: true
 			});
+			oMockServer.attachAfter("POST", function (oEvent) {
+				var oXhr = oEvent.getParameter("oXhr");
+				var oEntity = oEvent.getParameter("oEntity");
+
+				// You can inspect the request
+				var sUrl = oXhr.url;
+				var sBody = oXhr.requestBody;
+
+				// Modify the entity before returning it
+				oEntity.ApproveData = [
+					{
+						DateFrom: "\/Date(1772323200000)\/",
+						DateTo: "\/Date(1772323200000)\/",
+						TimeOfEnter: "100000",
+						TimeOfGoingOut: "110000",
+						AbbsenceType: "100"
+					}
+				];
+				oEntity.MessageReturn = [{"Type": "S",
+					"Id": "CLASS",
+					"Number": "001",
+					"Message": "Message from Mock server"
+
+				}];
+
+				// Send the custom response
+				oXhr.respond(
+					201,
+					{ "Content-Type": "application/json" },
+					JSON.stringify({ d: oEntity })
+				);
+			});
 
 			// handling mocking a function import call step
 			const aRequests = oMockServer.getRequests();

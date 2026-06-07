@@ -8,7 +8,8 @@
 		showHeader="false">
 		<VBox class="MobileDetailsDialogBody"
 			height="100%">
-			<HBox class="MobileMenuFooter" justifyContent="SpaceBetween" alignItems="Center">
+			<HBox class="MobileDetailsDialogHeader" justifyContent="SpaceBetween" alignItems="Center">
+				
 				<VBox height="100%">
 					<HBox alignItems="Center">
 						<Text class="MobileLabel2TextBold" 

@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:u="sap.ui.unified">
-    <VBox class="mainContainer">
+    <VBox class="MobileMainContainer">
         <HBox
             width="100%"
             class="MobileHeaderBar" alignItems="Center">

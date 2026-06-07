@@ -1,7 +1,7 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <VBox class="mainContainer">
+    <VBox class="MobileMainContainer">
             <!-- Header -->
             <HBox
                 width="100%"
@@ -18,14 +18,9 @@
             </HBox>
             <HBox justifyContent="Center" renderType="Bare" height="calc(100% - 10rem)">
                 <VBox justifyContent="Start" renderType="Bare">
-                    <HBox
-                        justifyContent="Center"
-                        width="100%"
-                    >
-                        <Text
-                            class="goodDayN"
-                            text="{clockModel>/greeting} {clockModel>/Employee/FirstName}"
-                        />
+                    <HBox justifyContent="Center" width="100%">
+                        <Text class="goodDayN"
+                            text="{clockModel>/greeting} {clockModel>/Employee/FirstName}"/>
                     </HBox>
                     <List swipe=".MobClockSwipe"
                     mode="SingleSelectMaster"

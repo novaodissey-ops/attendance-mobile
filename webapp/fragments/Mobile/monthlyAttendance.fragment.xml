@@ -3,7 +3,7 @@
     xmlns:core="sap.ui.core"
     xmlns:cust="attendanceshabas.attendanceshabas.controller"
     core:require="{formatter: 'attendanceshabas/attendanceshabas/model/formatter'}">
-    <VBox class="mainContainer"> 
+    <VBox class="MobileMainContainer"> 
         <HBox
             width="100%"
             class="MobileHeaderBar"
@@ -71,7 +71,7 @@
                                 <Label text="{clockModel>Weekday} { path: 'clockModel>Datum',
 				                                type: 'sap.ui.model.type.Date',
 				                                formatOptions: {pattern: 'dd.MM.yyyy'}}" class="MobileLabelTextBold"/>
-                                <Button icon="sap-icon://overflow" type="Transparent" press=".MobOnMonthlyItemMenu"/>                
+                                <Button icon="sap-icon://overflow" type="Transparent" press=".MobOnMonthlyItemMenu" class="MobileActionButton"/>                
                             </HBox>
 
 

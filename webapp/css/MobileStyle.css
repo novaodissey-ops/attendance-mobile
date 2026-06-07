@@ -12,6 +12,10 @@
 @import url("Elements/TimePicker.css");
 @import url("Elements/ToggleButton.css");
 
+.MobileMainContainer {
+  height: 100%;
+  width: 100%;
+}
 .MainScreenClock{
     height: 100%;
 }
@@ -24,7 +28,7 @@
         height: 100%;
         border-bottom: none;
         align-items: baseline;
-        margin-top: 12vw;
+        margin-top: 4vw;
     }
     .MainScreenClock .sapMListUl{
         height: 100%;
@@ -63,7 +67,7 @@
         height: 100%;
         border-bottom: none;
         align-items: baseline;
-        margin-top: 3vh;
+        margin-top: 2vh;
     }
     .MainScreenClock .sapMListUl{
         height: 100%;
@@ -107,7 +111,7 @@
     }
     .MobileFooterBody{
         width: 100%;
-        height: 5rem;
+        height: 8vh;
         border-radius: 1rem;
         background: linear-gradient(90deg, rgba(239, 247, 255, 0.1) 0%, rgba(249, 252, 255, 0.1) 100%);
         display: flex;
@@ -264,6 +268,18 @@
         padding-top: 1rem;
         padding-right: 2rem;
         padding-left: 2rem;
+        position: fixed;
+        bottom: 0;
+    }
+    .MobileDetailsDialogHeader{
+        background-color: #FFFFFF;
+        border-top-left-radius: 2rem;
+        border-top-right-radius: 2rem;
+        height: 16%;
+        width: 100%;
+        padding-top: 1rem;
+        padding-right: 2rem;
+        padding-left: 2rem;
     }
     .MobileDetailsDialogBody{
         background-color: white;
@@ -298,6 +314,15 @@
     .MobileDetailsImage{
         width: 2rem;
         height: 2rem;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        border: 1px solid var(--Sky-Blue, #d7eafc);
+        background: var(--Pure-White, #fff);
+        box-shadow: 0 14px 36px 0 rgba(106, 168, 255, 0.16);
+    }
+    .MobileDetailsAvatar{
+        width: 4rem;
+        height: 4rem;
         aspect-ratio: 1/1;
         border-radius: 50%;
         border: 1px solid var(--Sky-Blue, #d7eafc);
@@ -386,3 +411,4 @@
     font-weight: 400;
     line-height: normal;
     }
+    

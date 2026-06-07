@@ -1,7 +1,7 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-        <VBox class="mainContainer">
+        <VBox class="MobileMainContainer">
             <!-- Header -->
             <HBox
                 width="100%"
@@ -82,10 +82,8 @@
             <HBox justifyContent="Center" alignItems="Center" class="MobileMenuFooter">
                 <VBox width="80%">
                     <HBox alignItems="Center">
-                        <Avatar
+                        <Image class="MobileDetailsAvatar"
 							src="{clockModel>/Employee/ImgEmp}"
-							displaySize="M"
-							showBorder="true"
 							press=".openDetailsEmp"/>
                         <Text
                             class="MobileMediumText sapUiSmallMarginBeginEnd"

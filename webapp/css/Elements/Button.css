@@ -77,3 +77,21 @@
         border-radius: 1rem;
         min-width: 8rem;
     }
+
+    
+    .MobileActionButton .sapMBtnBack, 
+    .MobileActionButton .sapMBtnTransparent {
+        font-size: 1.3rem;
+        color: #27292B;
+        -webkit-text-stroke: .5px;
+    }
+    .MobileActionButton :not(.sapMBtnDisabled).sapMBtnBack>.sapMBtnIcon,
+    .MobileActionButton :not(.sapMBtnDisabled).sapMBtnTransparent>.sapMBtnIcon, 
+    .MobileActionButton :not(.sapMBtnDisabled).sapMBtnGhost>.sapMBtnIcon {
+        color: #27292B;
+    }
+    .MobileActionButton.sapMBtn:hover:not(.sapMBtnDisabled)>.sapMBtnHoverable.sapMBtnTransparent:not(.sapMBtnActive):not(.sapMToggleBtnPressed)>.sapMBtnIcon,
+    .MobileActionButton *.sapMBtn:hover:not(.sapMBtnDisabled)>span.sapMBtnInner.sapMBtnTransparent:not(.sapMBtnActive):not(.sapMToggleBtnPressed)>.sapMBtnIcon,
+    .MobileActionButton:not(.sapMBtnDisabled):not(.sapMSBActive)>span.sapMBtnInner.sapMBtnTransparent:not(.sapMBtnActive):not(.sapMToggleBtnPressed):hover>.sapMBtnIcon {
+        color: #27292B;
+    }

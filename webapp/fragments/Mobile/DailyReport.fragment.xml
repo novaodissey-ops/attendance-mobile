@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:cust="attendanceshabas.attendanceshabas.controller">
-    <VBox class="mainContainer">
+    <VBox class="MobileMainContainer">
         <HBox
             width="100%"
             class="MobileHeaderBar" alignItems="Center">
@@ -15,7 +15,16 @@
         </HBox> 
 
         <VBox height="100%" class="sapUiTinyMarginTop sapUiContentPadding">
-            
+            <HBox width="100%" justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
+                <Text text="{clockModel>/lastTime}" class="MobileLabelTextBold"/>
+                <SegmentedButton width="10rem" selectedKey="{clockModel>/DilyReport/CurrentClock}" 
+                    class="MobileSegmentButton">
+                    <items>
+                        <SegmentedButtonItem text="{i18n>enter}" key="B"/>
+                        <SegmentedButtonItem text="{i18n>exit}" key="E"/>
+                    </items>
+                </SegmentedButton>
+            </HBox>
             <Panel 
             expandable="true"
             expand=".MobOnPanelExpand" 

@@ -183,7 +183,7 @@ sap.ui.define(
                 that.showMessage(oData.MessageReturn[0].Message, "Warning");
               }
             },
-            error: function(oEvent){debugger;}
+            error: function(oEvent){that.showMessage(oEvent.message, "Error");}
           });
             
         }

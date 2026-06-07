@@ -717,6 +717,10 @@ sap.ui.define(
         
         MobDailyApprove: function(oEvent){
           var oModel = this.getView().getModel("clockModel");
+          var time = "PT" + String(new Date().getHours()).padStart(2, '0') + "H"
+                     String(new Date().getMinutes()).padStart(2, '0') + "M"
+                     String(new Date().getSeconds()).padStart(2, '0') + "S";
+        
 
           var update = JSON.parse(JSON.stringify(oModel.getProperty("/Data")));
             update.IvCaller = "1";
@@ -726,15 +730,15 @@ sap.ui.define(
             update.IvBegda = new Date();
             update.IvEndda = new Date();
             update.IvActionType = "1";
-            update.IvEventype = "";
-            update.IvBeguz = "";
-            update.IvEnduz = "";
+            update.IvEventype = oModel.getProperty("/DailyReport/CurrentClock");
+            update.IvBeguz = time;
+            update.IvEnduz = time;
             update.IvSubtyp = "";
             update.IvAbwgr = oModel.getProperty("/DailyReport/Reson");
             update.IvComment = oModel.getProperty("/DailyReport/Remark");
             update.IvPt60 = "";
             update.IvApp = "P";
-            update.Approval = "X";
+            
 
             this.saveDetais(update);
           //oModel.setProperty("/DailyReport/Approve", false);
@@ -798,7 +802,41 @@ sap.ui.define(
         },
         
         MobOnEntriesDetailsMenu: function(oEvent){
+          var item = oEvent.getSource().getParent().getParent().getParent().getParent().getBindingContext("clockModel").getObject();
+          item.EditEntry = structuredClone(item);
           this.OpenActionMenu("EntriesDetailsMenu", oEvent.getSource());
+        },
+        MobOnEntriesDetailsMenuSave: function(oEvent){
+          var item = oEvent.getSource().getParent().getParent().getParent().getParent().getBindingContext("clockModel").getObject();
+          var oModel = this.getView().getModel("clockModel");
+          var remark = oModel.getProperty("/RemarkDialog");
+          
+          var update = JSON.parse(JSON.stringify(oModel.getProperty("/Data")));
+            update.IvCaller = "1";
+            update.IvPdsnr = "";
+            update.IvUserName = "";
+            update.IvPersonnelNumber = "";
+            update.IvBegda = item.EditEntry.Datum;
+            update.IvEndda = item.EditEntry.Datum;
+            update.IvActionType = remark.ActionType;
+            update.IvEventype = "";
+            update.IvBeguz = "";
+            update.IvEnduz = "";
+            update.IvSubtyp = "";
+            update.IvAbwgr = "";
+            update.IvComment = remark.Text;
+            update.IvPt60 = "";
+            update.IvApp = "P";
+            update.Approval = "X";
+
+            this.saveDetais(update);
+            this.CloseDialogScreen(oEvent);
+          debugger;
+        },
+        MobOnEntriesDetailsMenuUndo: function(oEvent){
+          var oModel = this.getView().getModel("clockModel");
+          oModel.setProperty("/DailyItem/Editable", false);
+          oModel.refresh(false);
         },
         MobOnMonthlyItemMenu: function(oEvent){
           var menu = oEvent.getSource().getParent().getBindingContext("clockModel").getObject().menuAction;
@@ -850,6 +888,7 @@ sap.ui.define(
         MobSaveRemark: function(oEvent){
           var oModel = this.getView().getModel("clockModel");
           var remark = oModel.getProperty("/RemarkDialog");
+          
           var update = JSON.parse(JSON.stringify(oModel.getProperty("/Data")));
             update.IvCaller = "1";
             update.IvPdsnr = "";
